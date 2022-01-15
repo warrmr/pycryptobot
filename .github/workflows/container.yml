@@ -67,6 +67,7 @@ jobs:
 
           # Build and Publish container image
           docker buildx build --push \
+          --build-arg REPO=${{ github.repository }} \
           --cache-from "type=local,src=/tmp/.buildx-cache" \
           --cache-to "type=local,dest=/tmp/.buildx-cache-new,mode=max" \
           --tag $IMAGE_ID:$VERSION \
