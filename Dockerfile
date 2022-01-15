@@ -39,6 +39,8 @@ WORKDIR /app
 
 COPY --chown=pycryptobot:pycryptobot --from=compile-image /app /app
 
+USER pycryptobot
+
 # Make sure we use the virtualenv:
 ENV PATH="/app/bin:$PATH"
 
