@@ -37,8 +37,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 
 WORKDIR /app
 
-COPY --chown=pycryptobot:pycryptobot --from=compile-image /app /app
-
 USER pycryptobot
 
 # Make sure we use the virtualenv:
@@ -46,6 +44,8 @@ ENV PATH="/app/bin:$PATH"
 
 # Make sure we have a config dir for matplotlib when we not the root user
 ENV MPLCONFIGDIR="/app/.config/matplotlib"
+
+COPY --chown=pycryptobot:pycryptobot --from=compile-image /app /app
 
 # Pass parameters to the container run or mount your config.json into /app/
 ENTRYPOINT [ "python3", "-u", "pycryptobot.py" ]
