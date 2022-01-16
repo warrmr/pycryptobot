@@ -87,7 +87,6 @@ jobs:
           --file Dockerfile .
 
           # Inspect Image Metadata
-          echo ${{ steps.meta.outputs.labels }}
           docker buildx imagetools inspect ${{ steps.tags.outputs.IMAGE_ID }}:${{ steps.tags.outputs.VERSION }}N
 
       # Temp fix stops cache growing too big
