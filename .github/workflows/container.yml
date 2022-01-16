@@ -67,8 +67,8 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo '::set-output name=IMAGE_ID::'$IMAGE_ID
-          echo '::set-output name=VERSION::'$VERSION
+          echo "::set-output name=IMAGE_ID::$IMAGE_ID"
+          echo "::set-output name=VERSION::$VERSION"
 
       - name: Docker meta
         id: meta
