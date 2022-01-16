@@ -75,17 +75,20 @@ jobs:
           images: ${{ steps.tags.outputs.IMAGE_ID }}
 
       - name: Build and Push image
-        run: |
-        
-          # Build and Publish container image
-          docker buildx build --push \
-          --build-arg REPO=${{ github.repository }} \
-          --cache-from "type=local,src=/tmp/.buildx-cache" \
-          --cache-to "type=local,dest=/tmp/.buildx-cache-new,mode=max" \
-          --tag ${{ steps.tags.outputs.IMAGE_ID }}:${{ steps.tags.outputs.VERSION }} \
-          --platform $PLATFORM \
-          --file Dockerfile .
+        uses: docker/build-push-action@v2
+        with:
+          build-args: REPO=${{ github.repository }}
+          context: .
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          file: Dockerfile
+          platforms: ${{ env.PLATFORM }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Inspect Image
+        run: |
           # Inspect Image Metadata
           docker buildx imagetools inspect ${{ steps.tags.outputs.IMAGE_ID }}:${{ steps.tags.outputs.VERSION }}
 
