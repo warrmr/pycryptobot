@@ -72,7 +72,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ steps.tags.outputs.IMAGE_ID }}:${{ steps.tags.outputs.VERSION }}
+          images: ${{ steps.tags.outputs.IMAGE_ID }}
 
       - name: Build and Push image
         run: |
@@ -84,7 +84,6 @@ jobs:
           --cache-to "type=local,dest=/tmp/.buildx-cache-new,mode=max" \
           --tag ${{ steps.tags.outputs.IMAGE_ID }}:${{ steps.tags.outputs.VERSION }} \
           --platform $PLATFORM \
-          --label ${{ steps.meta.outputs.labels }} \
           --file Dockerfile .
 
           # Inspect Image Metadata
